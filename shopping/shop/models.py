@@ -14,6 +14,7 @@ class Base(models.Model):
 
 class ShoppingList(Base):
     name = models.CharField(max_length=50)
+    budget = models.IntegerField(default=0)
     owner = models.ForeignKey(User, related_name='shoplists')
 
     class Meta:

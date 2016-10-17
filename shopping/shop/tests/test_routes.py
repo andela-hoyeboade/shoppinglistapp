@@ -32,7 +32,8 @@ class TestShop(TestCase):
 
     def test_user_can_create_new_shopping_list(self):
         response = self.client.post(reverse('shop_list_create'),
-                                    {'name': 'Boots'})
+                                    {'name': 'Boots',
+                                     'budget': 1000})
 
         # Test redirection to all shopping list view
         self.assertEqual(response.status_code, 302)
