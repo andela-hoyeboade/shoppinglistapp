@@ -21,3 +21,14 @@ class ShoppingList(Base):
 
     def __str__(self):
         return self.name
+
+
+class ShoppingListItem(Base):
+    name = models.CharField(max_length=50)
+    shoplist = models.ForeignKey(ShoppingList, related_name='items')
+
+    class Meta:
+        ordering = ['-date_modified']
+
+    def __str__(self):
+        return self.name
