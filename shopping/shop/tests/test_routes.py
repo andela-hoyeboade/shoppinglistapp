@@ -56,3 +56,12 @@ class TestShop(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn(self.shoplist_item,
                       response.context_data.get('shoplistitems'))
+
+    def test_can_set_budget_for_shopping_list(self):
+        response = self.client.post(reverse('shop_list_create'),
+                                    {'name': 'Groceries',
+                                     'budget': 1500})
+
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(ShoppingList.objects.filter(
+            name='Groceries', budget=1500))
