@@ -1,0 +1,18 @@
+{% extends "account/layout/base.html" %}
+
+{% block content %}
+<div class="content-block">
+    {% include "account/partials/messages.html" %}
+    <legend>Shopping Lists </legend>
+    <ul>
+        <div class="row">
+            {% for shoplist in shoplists %}
+                <li> {{ shoplist.name }} </li>
+                <hr>
+            {% empty %}
+              No shopping list yet
+            {% endfor %}
+        </div>
+    </ul>
+</div>
+{% endblock content %}

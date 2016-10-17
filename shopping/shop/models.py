@@ -1,5 +1,23 @@
 from __future__ import unicode_literals
 
+from django.contrib.auth.models import User
 from django.db import models
 
-# Create your models here.
+
+class Base(models.Model):
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_modified = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+
+class ShoppingList(Base):
+    name = models.CharField(max_length=50)
+    owner = models.ForeignKey(User, related_name='shoplists')
+
+    class Meta:
+        ordering = ['-date_modified']
+
+    def __str__(self):
+        return self.name

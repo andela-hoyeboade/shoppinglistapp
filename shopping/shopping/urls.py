@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 import account.urls
+import shop.urls
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -22,4 +23,5 @@ from shopping.settings import STATIC_ROOT, STATIC_URL
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include(account.urls)),
+    url(r'^shops/', include(shop.urls)),
 ] + static(STATIC_URL, document_root=STATIC_ROOT)
