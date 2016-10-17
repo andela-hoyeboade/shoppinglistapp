@@ -68,7 +68,7 @@ class ShopListItemCreateView(LoginRequiredMixin, TemplateView):
             shoplist_item.save()
             messages.add_message(request, messages.SUCCESS,
                                  'Shoplist item created successfully')
-            return redirect(reverse('shop_item_create', kwargs={'shop_list_id': shoplist.id}),
+            return redirect(reverse('shop_list_item_create', kwargs={'shop_list_id': shoplist.id}),
                             context_instance=RequestContext(request))
         else:
             context = super(ShopListItemCreateView,
@@ -77,3 +77,13 @@ class ShopListItemCreateView(LoginRequiredMixin, TemplateView):
                                                     owner=self.request.user)
             context['shoplistitemform'] = form
             return render(request, self.template_name, context)
+
+
+class ShopListItemView(LoginRequiredMixin, TemplateView):
+
+    def get_context_data(self, **kwargs):
+        shoplist = get_object_or_404(
+            ShoppingList, id=kwargs.get('community_id', 0), owner=self.request.user)
+        context = super(ShopListItemView, self).get_context_data(**kwargs)
+        context['shoplistitems'] = ShoppingListItem.objects.filter(
+            shoplist=shoplist)

@@ -16,11 +16,11 @@ class TestShop(TestCase):
         self.create_shopping_list_item()
 
     def create_shopping_list(self, id=100, name='Wears'):
-        self.shoplist = ShoppingList.objects.create(id=id
+        self.shoplist = ShoppingList.objects.create(id=id,
                                                     name='Wears', owner=self.user)
 
     def create_shopping_list_item(self, id=100, name='Size 44 boot'):
-        self.shoplist_item = ShoppingListItem.objects.create(id=id
+        self.shoplist_item = ShoppingListItem.objects.create(id=id,
                                                              name=name,
                                                              shoplist=self.shoplist)
 
@@ -48,3 +48,11 @@ class TestShop(TestCase):
         # Test item is saved
         self.assertTrue(ShoppingListItem.objects.filter(
             name='2 pairs of jeans', shoplist=self.shoplist))
+
+    def test_user_can_view_items_in_shopping_list(self):
+        response = self.client.get(
+            reverse('shop_list_items', kwargs={'shop_list_id': 100}))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(self.shoplist_item,
+                      response.context_data.get('shoplistitems'))
