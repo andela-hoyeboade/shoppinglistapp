@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.test import Client, TestCase
-from shop.models import ShoppingList
+from shop.models import ShoppingList, ShoppingListItem
 
 
 class TestShop(TestCase):
@@ -13,10 +13,16 @@ class TestShop(TestCase):
         self.client = Client()
         self.client.login(username='hassan', password='hassan')
         self.create_shopping_list()
+        self.create_shopping_list_item()
 
-    def create_shopping_list(self, name='Wears'):
-        self.shoplist = ShoppingList.objects.create(
-            name='Wears', owner=self.user)
+    def create_shopping_list(self, id=100, name='Wears'):
+        self.shoplist = ShoppingList.objects.create(id=id
+                                                    name='Wears', owner=self.user)
+
+    def create_shopping_list_item(self, id=100, name='Size 44 boot'):
+        self.shoplist_item = ShoppingListItem.objects.create(id=id
+                                                             name=name,
+                                                             shoplist=self.shoplist)
 
     def test_can_retrieve_shooping_items(self):
         response = self.client.get(reverse('shop_list'))
@@ -34,3 +40,11 @@ class TestShop(TestCase):
         # Test shopping list is saved
         self.assertTrue(ShoppingList.objects.filter(
             name='Boots', owner=self.user))
+
+    def test_user_can_add_items_to_shopping_list(self):
+        response = self.client.post(reverse('shop_list_item_create', kwargs={'shop_list_id': 100}),
+                                    {'name': '2 pairs of jeans'})
+
+        # Test item is saved
+        self.assertTrue(ShoppingListItem.objects.filter(
+            name='2 pairs of jeans', shoplist=self.shoplist))
