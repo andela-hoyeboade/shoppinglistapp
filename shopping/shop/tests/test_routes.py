@@ -23,3 +23,14 @@ class TestShop(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertIn(self.shoplist, response.context_data.get('shoplists'))
+
+    def test_user_can_create_new_shopping_list(self):
+        response = self.client.post(reverse('shop_list_create'),
+                                    {'name': 'Boots'})
+
+        # Test redirection to all shopping list view
+        self.assertEqual(response.status_code, 302)
+
+        # Test shopping list is saved
+        self.assertTrue(ShoppingList.objects.filter(
+            name='Boots', owner=self.user))
