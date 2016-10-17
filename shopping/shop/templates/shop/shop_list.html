@@ -19,6 +19,8 @@
                     <ul class="dropdown-menu">
                       <li title="Add items to {{ shoplist.name }}">
                         <a href="{% url 'shop_list_item_create' shop_list_id=shoplist.id %}">Add items</a></li>
+                      <li title="View items in {{ shoplist.name }}">
+                        <a href="{% url 'shop_list_items' shop_list_id=shoplist.id %}">View items</a></li>
                     </ul>
                   </div>
                    </li>
