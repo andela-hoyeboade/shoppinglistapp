@@ -3,7 +3,12 @@
 {% block content %}
 <div class="content-block">
     {% include "account/partials/messages.html" %}
-    <legend>Shopping Lists </legend>
+    <legend>Shopping Lists
+        <a href="{% url 'shop_list_create' %}"class="pull-right" title="Add new shopping list">
+        <span class="add-class glyphicon glyphicon-plus"></span>
+        </a>
+</legend>
+
     <ul>
         <div class="row">
             {% for shoplist in shoplists %}
