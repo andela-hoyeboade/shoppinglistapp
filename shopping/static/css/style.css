@@ -1,0 +1,22 @@
+body {
+  background: #e9eaed;
+}
+
+.content-block {
+  margin-left: 25%;
+  margin-top: 15%;
+  max-width: 600px;
+}
+
+.add-class {
+  cursor: pointer;
+}
+
+.glyphicon {
+  cursor: pointer;
+}
+
+.class-options {
+  margin-right: 10px;
+  font-size: 24px;
+}
