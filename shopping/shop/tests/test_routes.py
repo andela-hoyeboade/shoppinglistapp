@@ -66,3 +66,11 @@ class TestShop(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertTrue(ShoppingList.objects.filter(
             name='Groceries', budget=1500))
+
+    def test_can_remove_items_from_shopping_list(self):
+        response = self.client.delete(reverse('shop_list_item_delete', kwargs={
+                                      'shop_list_id': 100, 'item_id': 100}))
+
+        # Test item is deleted
+        self.assertEqual(response.status_code, 302)
+        self.assertFalse(ShoppingListItem.objects.filter(id=100))
