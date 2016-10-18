@@ -74,3 +74,17 @@ class TestShop(TestCase):
         # Test item is deleted
         self.assertEqual(response.status_code, 302)
         self.assertFalse(ShoppingListItem.objects.filter(id=100))
+
+    def test_can_update_items_in_shopping_list(self):
+        response = self.client.post(reverse('shop_list_item_update', kwargs={
+                                    'shop_list_id': 100, 'item_id': 100}),
+                                    {'name': 'Size 45 boot'})
+
+        # Test redirection to all item views
+        self.assertEqual(response.status_code, 302)
+
+        # Test item is updated
+        self.assertTrue(ShoppingListItem.objects.filter(
+            id=100, name='Size 45 boot'))
+        self.assertFalse(ShoppingListItem.objects.filter(
+            id=100, name='Size 44 boot'))
