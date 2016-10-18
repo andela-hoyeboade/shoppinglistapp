@@ -19,9 +19,10 @@ class TestShop(TestCase):
         self.shoplist = ShoppingList.objects.create(id=id,
                                                     name='Wears', owner=self.user)
 
-    def create_shopping_list_item(self, id=100, name='Size 44 boot'):
+    def create_shopping_list_item(self, id=100, name='Size 44 boot', price='200'):
         self.shoplist_item = ShoppingListItem.objects.create(id=id,
                                                              name=name,
+                                                             price=price,
                                                              shoplist=self.shoplist)
 
     def test_can_retrieve_shooping_items(self):
@@ -78,7 +79,7 @@ class TestShop(TestCase):
     def test_can_update_items_in_shopping_list(self):
         response = self.client.post(reverse('shop_list_item_update', kwargs={
                                     'shop_list_id': 100, 'item_id': 100}),
-                                    {'name': 'Size 45 boot'})
+                                    {'name': 'Size 45 boot', 'price': 200})
 
         # Test redirection to all item views
         self.assertEqual(response.status_code, 302)
@@ -94,6 +95,21 @@ class TestShop(TestCase):
                                     {'name': '2 pairs of jeans',
                                      'price': 250})
 
+        # Test redirection to all item views
+        self.assertEqual(response.status_code, 302)
+
         # Test item is saved
         self.assertTrue(ShoppingListItem.objects.filter(
             name='2 pairs of jeans', price=250, shoplist=self.shoplist))
+
+    def test_can_update_prices_for_items(self):
+        response = self.client.post(reverse('shop_list_item_update', kwargs={'shop_list_id': 100, 'item_id': 100}),
+                                    {'name': '2 pairs of jeans',
+                                     'price': 300})
+
+        # Test redirection to all item views
+        self.assertEqual(response.status_code, 302)
+
+        # Test item is saved
+        self.assertTrue(ShoppingListItem.objects.filter(
+            name='2 pairs of jeans', price=300, shoplist=self.shoplist))

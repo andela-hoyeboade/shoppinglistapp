@@ -105,7 +105,7 @@ class ShopListItemDeleteView(LoginRequiredMixin, DeleteView):
 
 class ShopListItemUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = ShoppingListItem
-    fields = ['name']
+    fields = ['name', 'price']
     template_name = 'shop/shop_list_item_update.html'
     success_message = 'Item successfully updated'
 
