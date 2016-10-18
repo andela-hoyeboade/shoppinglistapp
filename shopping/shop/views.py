@@ -40,6 +40,27 @@ class ShopListCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         return super(ShopListCreateView, self).form_valid(form)
 
 
+class ShopListUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    model = ShoppingList
+    template_name = 'shop/shop_list_update.html'
+    fields = ['name', 'budget']
+    success_url = reverse_lazy('shop_list')
+    success_message = 'Shoplist updated successfully'
+
+    def get_object(self, queryset=None):
+        return get_shoplist(id=self.kwargs.get('shop_list_id', 0),
+                            owner=self.request.user)
+
+    def form_valid(self, form):
+        name = form.cleaned_data['name']
+        if self.get_object().name != name:
+            if ShoppingList.objects.filter(name=name, owner=self.request.user):
+                form._errors[forms.forms.NON_FIELD_ERRORS] = ErrorList([
+                    u'Shopping list already exist'])
+                return self.form_invalid(form)
+        return super(ShopListUpdateView, self).form_valid(form)
+
+
 class ShopListItemCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     template_name = 'shop/shop_list_item_create.html'
     model = ShoppingListItem

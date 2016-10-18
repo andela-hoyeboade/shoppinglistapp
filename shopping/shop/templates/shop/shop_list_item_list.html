@@ -13,6 +13,8 @@
         <div class="row">
             {% for shoplistitem in shoplistitems %}
                 <li> {{ shoplistitem.name }}
+                    <br>
+                    {{ shoplistitem.price }}
                     <div class="dropdown pull-right">
                         <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Options
                         <span class="caret"></span></button>

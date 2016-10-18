@@ -13,10 +13,14 @@
         <div class="row dropdown">
             {% for shoplist in shoplists %}
                 <li> {{ shoplist.name }}
+                    <br>
+                    {{ shoplist.budget }}
                 <div class="dropdown pull-right">
                     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Options
                     <span class="caret"></span></button>
                     <ul class="dropdown-menu">
+                      <li title="Update shopping list">
+                        <a href="{% url 'shop_list_update' shop_list_id=shoplist.id %}">Update Shopping List</a></li>
                       <li title="Add items to {{ shoplist.name }}">
                         <a href="{% url 'shop_list_item_create' shop_list_id=shoplist.id %}">Add items</a></li>
                       <li title="View items in {{ shoplist.name }}">
