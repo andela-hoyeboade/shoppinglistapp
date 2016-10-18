@@ -88,3 +88,12 @@ class TestShop(TestCase):
             id=100, name='Size 45 boot'))
         self.assertFalse(ShoppingListItem.objects.filter(
             id=100, name='Size 44 boot'))
+
+    def test_can_set_price_for_items(self):
+        response = self.client.post(reverse('shop_list_item_create', kwargs={'shop_list_id': 100}),
+                                    {'name': '2 pairs of jeans',
+                                     'price': 250})
+
+        # Test item is saved
+        self.assertTrue(ShoppingListItem.objects.filter(
+            name='2 pairs of jeans', price=250, shoplist=self.shoplist))
