@@ -113,3 +113,13 @@ class TestShop(TestCase):
         # Test item is saved
         self.assertTrue(ShoppingListItem.objects.filter(
             name='2 pairs of jeans', price=300, shoplist=self.shoplist))
+
+    def test_can_update_budget_for_shopping_list(self):
+        response = self.client.post(reverse('shop_list_update', kwargs={'shop_list_id': 100}),
+                                    {'name': 'Groceries',
+                                     'budget': 2000})
+
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(ShoppingList.objects.filter(
+            name='Groceries', budget=2000))
+        self.assertFalse(ShoppingList.objects.filter(name='Wears'))
