@@ -44,7 +44,7 @@ class TestShop(TestCase):
 
     def test_user_can_add_items_to_shopping_list(self):
         response = self.client.post(reverse('shop_list_item_create', kwargs={'shop_list_id': 100}),
-                                    {'name': '2 pairs of jeans'})
+                                    {'name': '2 pairs of jeans', 'price': 0})
 
         # Test item is saved
         self.assertTrue(ShoppingListItem.objects.filter(

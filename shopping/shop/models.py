@@ -30,6 +30,7 @@ class ShoppingList(Base):
 
 class ShoppingListItem(Base):
     name = models.CharField(max_length=50)
+    price = models.IntegerField(default=0)
     shoplist = models.ForeignKey(ShoppingList, related_name='items')
 
     class Meta:

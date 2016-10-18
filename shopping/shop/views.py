@@ -43,7 +43,7 @@ class ShopListCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 class ShopListItemCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     template_name = 'shop/shop_list_item_create.html'
     model = ShoppingListItem
-    fields = ['name']
+    fields = ['name', 'price']
     success_message = 'Item added to shopping list'
 
     def get_context_data(self, **kwargs):
