@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.forms.utils import ErrorList
 from django.shortcuts import get_object_or_404
 from django.views.generic import DeleteView, ListView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from shop.models import ShoppingList, ShoppingListItem
 
 
@@ -90,6 +90,24 @@ class ShopListItemView(LoginRequiredMixin, ListView):
 class ShopListItemDeleteView(LoginRequiredMixin, DeleteView):
     model = ShoppingListItem
     template_name = 'shop/shop_list_item_delete.html'
+
+    def get_object(self, queryset=None):
+        shoplist = get_shoplist(id=self.kwargs.get('shop_list_id', 0),
+                                owner=self.request.user)
+        return get_object_or_404(ShoppingListItem,
+                                 id=self.kwargs.get('item_id', 0),
+                                 shoplist=shoplist)
+
+    def get_success_url(self):
+        return reverse_lazy('shop_list_items',
+                            kwargs={'shop_list_id': self.kwargs.get('shop_list_id')})
+
+
+class ShopListItemUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    model = ShoppingListItem
+    fields = ['name']
+    template_name = 'shop/shop_list_item_update.html'
+    success_message = 'Item successfully updated'
 
     def get_object(self, queryset=None):
         shoplist = get_shoplist(id=self.kwargs.get('shop_list_id', 0),

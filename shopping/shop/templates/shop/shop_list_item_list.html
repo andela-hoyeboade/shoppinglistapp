@@ -17,8 +17,10 @@
                         <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Options
                         <span class="caret"></span></button>
                         <ul class="dropdown-menu">
-                          <li title="Delete item">
-                            <a href="{% url 'shop_list_item_delete' shop_list_id=shoplist.id item_id=shoplistitem.id %}">Delete item</a></li>
+                            <li title="Delete item">
+                                <a href="{% url 'shop_list_item_delete' shop_list_id=shoplist.id item_id=shoplistitem.id %}">Delete item</a></li>
+                            <li title="Update item">
+                                <a href="{% url 'shop_list_item_update' shop_list_id=shoplist.id item_id=shoplistitem.id %}">Update item</a></li>
                         </ul>
                       </div>
                 </li>

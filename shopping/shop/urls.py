@@ -9,5 +9,8 @@ urlpatterns = [
     url(r'^(?P<shop_list_id>[0-9]+)/items$',
         views.ShopListItemView.as_view(), name='shop_list_items'),
     url(r'^(?P<shop_list_id>[0-9]+)/items/(?P<item_id>[0-9]+)/delete$',
-        views.ShopListItemDeleteView.as_view(), name='shop_list_item_delete')
+        views.ShopListItemDeleteView.as_view(), name='shop_list_item_delete'),
+    url(r'^(?P<shop_list_id>[0-9]+)/items/(?P<item_id>[0-9]+)/update$',
+        views.ShopListItemUpdateView.as_view(), name='shop_list_item_update')
+
 ]
