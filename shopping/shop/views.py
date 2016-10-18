@@ -65,6 +65,10 @@ class ShopListItemCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView
             form.instance.shoplist = shoplist
             return super(ShopListItemCreateView, self).form_valid(form)
 
+    def get_success_url(self):
+        return reverse_lazy('shop_list_items',
+                            kwargs={'shop_list_id': self.kwargs.get('shop_list_id')})
+
 
 class ShopListItemView(LoginRequiredMixin, ListView):
     template_name = 'shop/shop_list_item_list.html'

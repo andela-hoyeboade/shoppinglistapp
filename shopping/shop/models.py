@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.db import models
 
 
@@ -25,7 +25,7 @@ class ShoppingList(Base):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('shop_list_items', kwargs={'shop_list_id': self.pk})
+        return reverse_lazy('shop_list_items', kwargs={'shop_list_id': self.pk})
 
 
 class ShoppingListItem(Base):
@@ -39,4 +39,5 @@ class ShoppingListItem(Base):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('shop_list_items', kwargs={'shop_list_id': self.shoplist.id})
+        return reverse_lazy('shop_list_item_detail',
+                            kwargs={'shop_list_id': self.shoplist.pk, 'item_id': self.pk})
