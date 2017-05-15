@@ -1,0 +1,23 @@
+{% extends "account/layout/base.html" %}
+
+{% block content %}
+<div class="content-block">
+    {% include "account/partials/messages.html" %}
+    <legend>Items for Shopping List <strong> <em> {{ shoplist.name }} </em></strong>
+        <a href="{% url 'shop_list_item_create' shop_list_id=shoplist.id %}"class="pull-right"
+            title="Add item to {{ shoplist.name }}">
+        <span class="add-class glyphicon glyphicon-plus"></span>
+        </a></legend>
+
+    <ul>
+        <div class="row">
+            {% for shoplistitem in shoplistitems %}
+                <li> {{ shoplistitem.name }}  </li>
+                <hr>
+            {% empty %}
+              No item yet for this shopping list
+            {% endfor %}
+        </div>
+    </ul>
+</div>
+{% endblock content %}

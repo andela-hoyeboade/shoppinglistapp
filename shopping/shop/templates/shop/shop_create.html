@@ -1,0 +1,17 @@
+{% extends "account/layout/base.html" %}
+{% load bootstrap %}
+
+{% block content %}
+<div class="content-block">
+    {% include "account/partials/messages.html" %}
+    <legend>Create New Shopping List
+    </legend>
+    <form method="post">
+        {% csrf_token %}
+        {{ form|bootstrap }}
+        <input class="btn btn-primary" type="submit" value="Create Shopping List" />
+        &emsp;
+        <a href="{% url 'shop_list' %}">View All Shopping lists</a>
+    </form>
+</div>
+{% endblock content %}

@@ -1,0 +1,34 @@
+{% extends "account/layout/base.html" %}
+
+{% block content %}
+<div class="content-block">
+    {% include "account/partials/messages.html" %}
+    <legend>Shopping Lists
+        <a href="{% url 'shop_list_create' %}"class="pull-right" title="Add new shopping list">
+        <span class="add-class glyphicon glyphicon-plus"></span>
+        </a>
+</legend>
+
+    <ul>
+        <div class="row dropdown">
+            {% for shoplist in shoplists %}
+                <li> {{ shoplist.name }}
+                <div class="dropdown pull-right">
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Options
+                    <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                      <li title="Add items to {{ shoplist.name }}">
+                        <a href="{% url 'shop_list_item_create' shop_list_id=shoplist.id %}">Add items</a></li>
+                      <li title="View items in {{ shoplist.name }}">
+                        <a href="{% url 'shop_list_items' shop_list_id=shoplist.id %}">View items</a></li>
+                    </ul>
+                  </div>
+                   </li>
+                <hr>
+            {% empty %}
+              No shopping list yet
+            {% endfor %}
+        </div>
+    </ul>
+</div>
+{% endblock content %}

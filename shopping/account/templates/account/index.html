@@ -1,0 +1,16 @@
+{% extends "account/layout/base.html" %}
+{% load staticfiles %}
+{% load bootstrap %}
+
+{% block content %}
+<div class="content-block">
+    <h1>Shopping List App</h1>
+    {% include "account/partials/messages.html" %}
+    <legend>Log In</legend>
+    <form method="post">
+        {% csrf_token %}
+        {{ loginform|bootstrap }}
+        <input type="submit" class="btn btn-primary" value="Log In"></input>
+    </form>
+</div>
+{% endblock content %}
